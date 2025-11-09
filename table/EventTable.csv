@@ -1,0 +1,3 @@
+ID,EventType,DurationType,DurationValue,RoundTimeMin,Start_Y,Start_M,Start_D,Start_H,End_Y,End_M,End_D,End_H,CustomValue0,CustomValue1,CustomValue2,CustomValue3,CustomValue4
+1,E_EVENT_TYPE_TRIGGER,E_DURATION_PERMANENT,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+2,E_EVENT_TYPE_COMPETITION,E_DURATION_REPEAT,0,5,2025,11,9,17,2025,11,9,18,0,0,0,0,0
