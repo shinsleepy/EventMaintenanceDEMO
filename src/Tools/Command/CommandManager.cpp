@@ -54,7 +54,7 @@ void CommandManager::Execute(const std::string& Input)
 void CommandManager::ShowHelp()
 {
     std::cout << "Available commands:\n";
-    for (auto Iter_ = _Descriptions.begin(); Iter_ != _Descriptions.end(); ++Iter_) 
+    for(auto Iter_ = _Descriptions.begin(); Iter_ != _Descriptions.end(); ++Iter_) 
     {
         std::cout << " - " << Iter_->first;
         if (!Iter_->second.empty())

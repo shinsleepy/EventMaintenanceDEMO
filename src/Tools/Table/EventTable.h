@@ -37,8 +37,6 @@ inline eEventType EventTypeFromString(const std::string& str) {
 #define EVENT_DURATION_TYPE_LIST \
 X(E_DURATION_PERMANENT) /* always exist */\
 X(E_DURATION_SINGLE_ROUND) /* round time = event time */\
-X(E_DURATION_DAILY) /* 1 round each day */\
-X(E_DURATION_WEEK_DAYS) /* certain weekday, 1 round each weekday */\
 X(E_DURATION_REPEAT) /* repeat depend on round time */\
 
 enum class eEventDurationType
@@ -63,8 +61,6 @@ inline eEventDurationType EventDurationTypeFromString(const std::string& str) {
 #undef X
 		return eEventDurationType::E_DURATION_PERMANENT; // default
 }
-
-
 
 const int CUSTOM_VALUE_NUM = 5;
 

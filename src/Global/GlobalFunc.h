@@ -3,6 +3,8 @@
 
 #include <ctime> 
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 struct DocTime
 {
@@ -29,5 +31,14 @@ struct DocTime
 		return mktime(&t);
 	}
 };
+
+inline std::string TimeToString(time_t timestamp)
+{
+	auto TM_ = *localtime(&timestamp);
+
+	std::ostringstream oss;
+	oss << std::put_time(&TM_, "%Y-%m-%d %H:%M");
+	return oss.str();
+}
 
 #endif //_GLOBAL_FUNC_H_

@@ -1,4 +1,122 @@
 #include "EventServer.h"
+#include "Tools/Table/TableManager.h"
+#include "Tools/Log/LogManager.h"
+#include <set>
+#include <iostream>
+#include "Global/GlobalFunc.h"
+#include <string>
 
+EventServer& EventServer::Instance()
+{
+    static EventServer s_Instance;
+    return s_Instance;
+}
 
+int EventServer::Init()
+{
+	ReadLastEvent();
+	ReadCSV();
+	ShowType();
+	return E_RETURN_CODE_OK;
+}
 
+int EventServer::Reload()
+{
+	ReadCSV();
+	return E_RETURN_CODE_OK;
+}
+
+void EventServer::ReadLastEvent()
+{}
+
+void EventServer::RecordCurrentEvent()
+{}
+
+void EventServer::ReadCSV()
+{
+	auto CurrentTime_ = time(NULL);
+
+	auto EventSettings_ = TableManager::Instance().GetAllEventSetting();
+
+	for (auto Iter_ = EventSettings_.begin(); Iter_ != EventSettings_.end(); ++Iter_)
+	{
+		if (Iter_->second.StartTime > Iter_->second.EndTime)
+		{
+			LogManager::Instance().Log(E_LOG_TYPE_ERROR, "Event CSV Error. Event:%d StartTime > EndTime", Iter_->first);
+			continue;
+		}
+
+		auto EventIter_ = _EventMap.find(Iter_->first);
+		if (EventIter_ == _EventMap.end())
+		{
+			if (CurrentTime_ > Iter_->second.EndTime)
+				continue;
+
+			// Add new event
+			EventUnit NewEvent_;
+			EventIter_ = _EventMap.insert_or_assign(Iter_->first, NewEvent_).first; 
+			//EventIter_ = _EventMap.emplace(Iter_->first, NewEvent_).first;
+			NewEvent_.Init();
+		}
+
+		EventIter_->second.EventID = Iter_->first;
+		EventIter_->second.EventTime[0] = Iter_->second.StartTime;
+		EventIter_->second.EventTime[1] = Iter_->second.EndTime;
+
+		EventIter_->second.ComputeNextRoundTime(CurrentTime_);
+
+		if (CurrentTime_ >= EventIter_->second.RoundTime[0])
+		{
+			EventIter_->second.State = EES_ONGOING;
+			LogManager::Instance().Log(E_LOG_TYPE_INFO, "Add New Event Just After ReadCSV. EventID:%d", EventIter_->first);
+		}
+		else
+			EventIter_->second.State = EES_EVE;
+
+		// TODO: prepare sync flag to notify other servers
+	}
+
+	// check event lost setting
+	// a way to close event
+	for (auto Iter_ = _EventMap.begin(); Iter_ != _EventMap.end(); ++Iter_)
+	{
+		if (Iter_->second.GetSetting() == nullptr)
+			Iter_->second.State = EES_STOP;
+	}
+}
+
+void EventServer::Show(int EventID)
+{
+	auto Iter_ = _EventMap.find(EventID);
+	if (Iter_ == _EventMap.end())
+		return;
+
+	auto pSetting_ = Iter_->second.GetSetting();
+	if (!pSetting_)
+		return;
+
+	std::cout << "EventID:" << Iter_->first << " EventType:" << 0 <<" State:" << Iter_->second.State << " From:" << TimeToString(Iter_->second.RoundTime[0]) << " To:"<< TimeToString(Iter_->second.RoundTime[1]) << std::endl;
+}
+
+void EventServer::ShowType(eEventType Type)
+{	
+	for (auto Iter_ = _EventMap.begin(); Iter_ != _EventMap.end(); ++Iter_)
+	{
+		auto pSetting_ = Iter_->second.GetSetting();
+		if (!pSetting_)
+			continue;
+
+		if (pSetting_->EventType == Type)
+			Show(Iter_->first);
+		else if (Type == eEventType::E_EVENT_TYPE_NONE) // show all event
+			Show(Iter_->first);
+	}
+}
+
+void EventServer::Update(time_t CurrentTime)
+{
+	for (auto Iter_ = _EventMap.begin(); Iter_ != _EventMap.end(); ++Iter_)
+	{
+		Iter_->second.CheckState(CurrentTime);
+	}
+}

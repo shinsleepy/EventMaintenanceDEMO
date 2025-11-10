@@ -134,3 +134,16 @@ int TableManager::ReadEventTable()
 
 	return 0;
 }
+
+const std::map<int, EventTableEntry>& TableManager::GetAllEventSetting() const
+{
+    return _EventTableSetting;
+}
+
+const EventTableEntry* TableManager::GetEventEntry(int EventID)
+{
+    auto Iter_ = _EventTableSetting.find(EventID);
+    if (Iter_ == _EventTableSetting.end())
+        return nullptr;
+    return &Iter_->second;
+}

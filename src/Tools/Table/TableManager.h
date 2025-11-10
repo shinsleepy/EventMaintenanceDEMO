@@ -11,6 +11,7 @@ private:
     std::string _TablePath = "";
 
     std::map<int, EventTableEntry> _EventTableSetting; // <EventID, EventSetting>
+
 public:
     static TableManager& Instance();
     ~TableManager();
@@ -19,6 +20,9 @@ public:
     void Clear();
     void SetPath(std::string Path);
     int Reload();
+
+    const std::map<int, EventTableEntry>& GetAllEventSetting() const;
+    const EventTableEntry* GetEventEntry(int EventID);
 
 private:
     TableManager();

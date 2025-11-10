@@ -5,6 +5,7 @@
 #include "Global/GlobalConst.h"
 #include <thread>
 #include <atomic>
+#include "EventServer.h"
 
 using namespace std;
 
@@ -33,6 +34,13 @@ int InitCommand()
 		},
 		"Show all commands and their desc");
 
+	CommandManager_.RegisterCommand("show_event", [](const std::vector<std::string>&)
+		{
+			std::cout << "Show events...\n";
+			EventServer::Instance().ShowType();
+		},
+		"Show events");
+
 	return E_RETURN_CODE_OK;
 }
 
@@ -47,10 +55,11 @@ int Init()
 	LogManager::Instance().Log(E_LOG_TYPE_INFO, "TableManager Init Complete");
 
 	// Server
-	if (InitEventServer())
+	if (EventServer::Instance().Init())
 	{
 		return E_RETURN_CODE_FAILED;
 	}
+	LogManager::Instance().Log(E_LOG_TYPE_INFO, "EventServer Init Complete");
 
 	// Init Command
 	if (InitCommand())
@@ -68,8 +77,9 @@ void MainProcess()
 		if (temp_ != CurrentTime_)// run once per sec
 		{
 			CurrentTime_ = temp_;
+			//LogManager::Instance().Log(E_LOG_TYPE_INFO, "Heartbeat %d", CurrentTime_);
 
-			LogManager::Instance().Log(E_LOG_TYPE_INFO, "Heartbeat %d", CurrentTime_);
+			EventServer::Instance().Update(CurrentTime_);
 		}
 	}
 }
