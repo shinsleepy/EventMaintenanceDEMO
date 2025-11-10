@@ -11,11 +11,6 @@ using namespace std;
 
 std::atomic<bool> g_Running = true;
 
-int InitEventServer()
-{
-	return E_RETURN_CODE_OK;
-}
-
 int InitCommand()
 {
 	auto& CommandManager_ = CommandManager::Instance();
@@ -40,6 +35,14 @@ int InitCommand()
 			EventServer::Instance().ShowType();
 		},
 		"Show events");
+
+	CommandManager_.RegisterCommand("reload", [](const std::vector<std::string>&)
+		{
+			std::cout << "Reload CSV...\n";
+			TableManager::Instance().Reload();
+			EventServer::Instance().Reload();
+		},
+		"Reload CSV");
 
 	return E_RETURN_CODE_OK;
 }

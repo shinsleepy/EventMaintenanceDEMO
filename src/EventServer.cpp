@@ -27,10 +27,14 @@ int EventServer::Reload()
 }
 
 void EventServer::ReadLastEvent()
-{}
+{
+	// TODO: recovery events from DB or ini 
+}
 
 void EventServer::RecordCurrentEvent()
-{}
+{
+	// TODO: record current events to DB or ini
+}
 
 void EventServer::ReadCSV()
 {
@@ -106,17 +110,25 @@ void EventServer::ShowType(eEventType Type)
 		if (!pSetting_)
 			continue;
 
-		if (pSetting_->EventType == Type)
+		if (Type == eEventType::E_EVENT_TYPE_NONE) // show all event
 			Show(Iter_->first);
-		else if (Type == eEventType::E_EVENT_TYPE_NONE) // show all event
+		else if (pSetting_->EventType == Type)
 			Show(Iter_->first);
 	}
 }
 
 void EventServer::Update(time_t CurrentTime)
 {
-	for (auto Iter_ = _EventMap.begin(); Iter_ != _EventMap.end(); ++Iter_)
+	auto Iter_ = _EventMap.begin();
+
+	while(Iter_ != _EventMap.end())	
 	{
-		Iter_->second.CheckState(CurrentTime);
+		if (Iter_->second.CheckState(CurrentTime) == EES_FINISH)
+		{
+			LogManager::Instance().Log(E_LOG_TYPE_INFO, "Remove finished event. EventID:%d", Iter_->first);
+			Iter_ = _EventMap.erase(Iter_);
+		}	
+		else
+			++Iter_;
 	}
 }
