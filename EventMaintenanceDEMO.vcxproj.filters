@@ -36,23 +36,23 @@
     <ClInclude Include="src\EventServer.h">
       <Filter>src\EventSever</Filter>
     </ClInclude>
-    <ClInclude Include="src\Common\Log\LogManager.h">
-      <Filter>src\Tools\Log</Filter>
+    <ClInclude Include="src\Global\GlobalConst.h">
+      <Filter>src\Global</Filter>
     </ClInclude>
-    <ClInclude Include="src\Common\Table\TableManager.h">
-      <Filter>src\Tools\CSV</Filter>
+    <ClInclude Include="src\Global\GlobalFunc.h">
+      <Filter>src\Global</Filter>
     </ClInclude>
-    <ClInclude Include="src\Common\Table\EventTable.h">
+    <ClInclude Include="src\Tools\Table\EventTable.h">
       <Filter>src\Tools\CSV\TableStruct</Filter>
     </ClInclude>
-    <ClInclude Include="src\Common\Global\GlobalFunc.h">
-      <Filter>src\Global</Filter>
+    <ClInclude Include="src\Tools\Table\TableManager.h">
+      <Filter>src\Tools\CSV</Filter>
     </ClInclude>
-    <ClInclude Include="src\Common\Global\GlobalConst.h">
-      <Filter>src\Global</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CommandManager.h">
+    <ClInclude Include="src\Tools\Command\CommandManager.h">
       <Filter>src\Tools\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tools\Log\LogManager.h">
+      <Filter>src\Tools\Log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,14 +62,14 @@
     <ClCompile Include="src\EventServer.cpp">
       <Filter>src\EventSever</Filter>
     </ClCompile>
-    <ClCompile Include="src\Common\Log\LogManager.cpp">
-      <Filter>src\Tools\Log</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Common\Table\TableManager.cpp">
+    <ClCompile Include="src\Tools\Table\TableManager.cpp">
       <Filter>src\Tools\CSV</Filter>
     </ClCompile>
-    <ClCompile Include="src\CommandManager.cpp">
+    <ClCompile Include="src\Tools\Command\CommandManager.cpp">
       <Filter>src\Tools\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Log\LogManager.cpp">
+      <Filter>src\Tools\Log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
