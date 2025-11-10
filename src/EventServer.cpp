@@ -95,7 +95,7 @@ void EventServer::Show(int EventID)
 	if (!pSetting_)
 		return;
 
-	std::cout << "EventID:" << Iter_->first << " EventType:" << 0 <<" State:" << Iter_->second.State << " From:" << TimeToString(Iter_->second.RoundTime[0]) << " To:"<< TimeToString(Iter_->second.RoundTime[1]) << std::endl;
+	std::cout << "EventID:" << Iter_->first << " EventType:" << EventTypeToString(pSetting_->EventType) <<" State:" << Iter_->second.State << " From:" << TimeToString(Iter_->second.RoundTime[0]) << " To:"<< TimeToString(Iter_->second.RoundTime[1]) << std::endl;
 }
 
 void EventServer::ShowType(eEventType Type)
