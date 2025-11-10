@@ -1,7 +1,8 @@
 #include <iostream>
-#include "Common/Log/LogManager.h"
-#include "Common/Table/TableManager.h"
-#include "Common/Global/GlobalConst.h"
+#include "Tools/Log/LogManager.h"
+#include "Tools/Table/TableManager.h"
+#include "Tools/Command/CommandManager.h"
+#include "Global/GlobalConst.h"
 #include <thread>
 #include <atomic>
 
@@ -11,6 +12,27 @@ std::atomic<bool> g_Running = true;
 
 int InitEventServer()
 {
+	return E_RETURN_CODE_OK;
+}
+
+int InitCommand()
+{
+	auto& CommandManager_ = CommandManager::Instance();
+
+	CommandManager_.RegisterCommand("exit", [](const std::vector<std::string>&)
+		{
+			std::cout << "Exiting server...\n";
+			g_Running = false;
+		}, 
+		"Exit the server");
+
+	CommandManager_.RegisterCommand("help", [](const std::vector<std::string>&)
+		{
+			std::cout << "Show commands...\n";
+			CommandManager::Instance().ShowHelp();
+		},
+		"Show all commands and their desc");
+
 	return E_RETURN_CODE_OK;
 }
 
@@ -24,11 +46,15 @@ int Init()
 		return E_RETURN_CODE_FAILED;
 	LogManager::Instance().Log(E_LOG_TYPE_INFO, "TableManager Init Complete");
 
-	//Server
+	// Server
 	if (InitEventServer())
 	{
 		return E_RETURN_CODE_FAILED;
 	}
+
+	// Init Command
+	if (InitCommand())
+		return E_RETURN_CODE_FAILED;
 
 	return E_RETURN_CODE_OK;
 }
@@ -37,10 +63,9 @@ void MainProcess()
 {
 	time_t CurrentTime_ = 0;
 	while (g_Running)
-	{
-		// run once per sec
+	{	
 		auto temp_ = time(NULL);
-		if (temp_ != CurrentTime_)
+		if (temp_ != CurrentTime_)// run once per sec
 		{
 			CurrentTime_ = temp_;
 
@@ -58,16 +83,12 @@ int Close()
 
 void CommandListener()
 {
-	std::string input;
+	std::string Input_;
 	while (g_Running) {
-		std::getline(std::cin, input);
-		if (input == "exit") {
-			std::cout << "[Server] Exit command received.\n";
-			g_Running = false;
-		}
-		else if (!input.empty()) {
-			std::cout << "[Server] Unknown command: " << input << std::endl;
-		}
+		std::getline(std::cin, Input_);
+		if (Input_.empty())
+			continue;
+		CommandManager::Instance().Execute(Input_);
 	}
 }
 
@@ -79,13 +100,13 @@ int main()
 		return E_RETURN_CODE_FAILED;
 	}
 
-	std::thread cmdThread(CommandListener);
+	std::thread CmdThread_(CommandListener);
 
 	MainProcess();
 	
 	g_Running = false;
-	if (cmdThread.joinable())
-		cmdThread.join();
+	if (CmdThread_.joinable())
+		CmdThread_.join();
 
 	Close();
 

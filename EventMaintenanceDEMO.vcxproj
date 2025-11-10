@@ -127,19 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Common\Global\GlobalConst.h" />
-    <ClInclude Include="src\Common\Global\GlobalFunc.h" />
-    <ClInclude Include="src\Common\Log\LogManager.h" />
-    <ClInclude Include="src\Common\Table\TableManager.h" />
-    <ClInclude Include="src\Common\Table\EventTable.h" />
     <ClInclude Include="src\Event.h" />
     <ClInclude Include="src\EventServer.h" />
+    <ClInclude Include="src\Global\GlobalConst.h" />
+    <ClInclude Include="src\Global\GlobalFunc.h" />
+    <ClInclude Include="src\Tools\Command\CommandManager.h" />
+    <ClInclude Include="src\Tools\Log\LogManager.h" />
+    <ClInclude Include="src\Tools\Table\EventTable.h" />
+    <ClInclude Include="src\Tools\Table\TableManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Common\Log\LogManager.cpp" />
-    <ClCompile Include="src\Common\Table\TableManager.cpp" />
     <ClCompile Include="src\EventServer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Tools\Command\CommandManager.cpp" />
+    <ClCompile Include="src\Tools\Log\LogManager.cpp" />
+    <ClCompile Include="src\Tools\Table\TableManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="table\EventTable.csv" />

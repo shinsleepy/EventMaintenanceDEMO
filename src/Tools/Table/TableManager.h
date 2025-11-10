@@ -13,6 +13,7 @@ private:
     std::map<int, EventTableEntry> _EventTableSetting; // <EventID, EventSetting>
 public:
     static TableManager& Instance();
+    ~TableManager();
 
     int Init(std::string Path);
     void Clear();
@@ -21,11 +22,8 @@ public:
 
 private:
     TableManager();
-    ~TableManager();
 
     int ReadEventTable();
-
-
 };
 
 #endif //_TABLE_MANAGER_H_

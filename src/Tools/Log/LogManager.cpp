@@ -6,8 +6,8 @@
 
 LogManager& LogManager::Instance() 
 {
-    static LogManager instance;
-    return instance;
+    static LogManager s_Instance;
+    return s_Instance;
 }
 
 LogManager::LogManager() : m_Running(false)

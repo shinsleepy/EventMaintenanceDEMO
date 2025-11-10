@@ -7,23 +7,26 @@
     <Filter Include="src\EventSever">
       <UniqueIdentifier>{161283e1-c668-4d6b-a5e0-927d5cc87afb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Common">
-      <UniqueIdentifier>{a33c44ea-d30d-463f-b773-bba722cf355c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Common\Log">
-      <UniqueIdentifier>{0db3b949-1ec6-49fe-8572-583709a4f0eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Common\CSV">
-      <UniqueIdentifier>{312de410-a17e-42f1-8553-a835e2a7e369}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Common\CSV\TableStruct">
-      <UniqueIdentifier>{211dc6a4-fc31-4d66-9f25-4a7eeffe02b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Common\Global">
-      <UniqueIdentifier>{0b56a3f1-2280-445c-bc61-d62d62c466ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="table">
       <UniqueIdentifier>{01642c98-ee4d-4e52-9ebc-d8555a714a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Tools">
+      <UniqueIdentifier>{a33c44ea-d30d-463f-b773-bba722cf355c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Tools\Log">
+      <UniqueIdentifier>{0db3b949-1ec6-49fe-8572-583709a4f0eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Tools\CSV">
+      <UniqueIdentifier>{312de410-a17e-42f1-8553-a835e2a7e369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Tools\CSV\TableStruct">
+      <UniqueIdentifier>{211dc6a4-fc31-4d66-9f25-4a7eeffe02b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Global">
+      <UniqueIdentifier>{0b56a3f1-2280-445c-bc61-d62d62c466ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Tools\Command">
+      <UniqueIdentifier>{57399369-0170-469a-83e2-348a758e8eb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,19 +37,22 @@
       <Filter>src\EventSever</Filter>
     </ClInclude>
     <ClInclude Include="src\Common\Log\LogManager.h">
-      <Filter>src\Common\Log</Filter>
+      <Filter>src\Tools\Log</Filter>
     </ClInclude>
     <ClInclude Include="src\Common\Table\TableManager.h">
-      <Filter>src\Common\CSV</Filter>
+      <Filter>src\Tools\CSV</Filter>
     </ClInclude>
     <ClInclude Include="src\Common\Table\EventTable.h">
-      <Filter>src\Common\CSV\TableStruct</Filter>
+      <Filter>src\Tools\CSV\TableStruct</Filter>
     </ClInclude>
     <ClInclude Include="src\Common\Global\GlobalFunc.h">
-      <Filter>src\Common\Global</Filter>
+      <Filter>src\Global</Filter>
     </ClInclude>
     <ClInclude Include="src\Common\Global\GlobalConst.h">
-      <Filter>src\Common\Global</Filter>
+      <Filter>src\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommandManager.h">
+      <Filter>src\Tools\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,10 +63,13 @@
       <Filter>src\EventSever</Filter>
     </ClCompile>
     <ClCompile Include="src\Common\Log\LogManager.cpp">
-      <Filter>src\Common\Log</Filter>
+      <Filter>src\Tools\Log</Filter>
     </ClCompile>
     <ClCompile Include="src\Common\Table\TableManager.cpp">
-      <Filter>src\Common\CSV</Filter>
+      <Filter>src\Tools\CSV</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CommandManager.cpp">
+      <Filter>src\Tools\Command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

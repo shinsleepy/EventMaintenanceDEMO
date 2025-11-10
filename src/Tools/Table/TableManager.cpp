@@ -2,11 +2,11 @@
 #include "../Log/LogManager.h"
 #include <fstream>
 #include <sstream>
-#include "../Global/GlobalFunc.h"
+#include "../../Global/GlobalFunc.h"
 
 TableManager& TableManager::Instance() {
-    static TableManager instance;
-    return instance;
+    static TableManager s_Instance;
+    return s_Instance;
 }
 
 int TableManager::Init(std::string Path)
@@ -45,6 +45,7 @@ TableManager::TableManager()
 
 TableManager::~TableManager()
 {
+    Clear();
 }
 
 int TableManager::ReadEventTable()

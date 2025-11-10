@@ -26,6 +26,7 @@ class LogManager
 {
 public:
     static LogManager& Instance();
+    ~LogManager();
 
     int Start();
     void Stop();
@@ -37,7 +38,6 @@ public:
 
 private:
     LogManager();
-    ~LogManager();
 
     void WorkerThread();
     std::string GetCurrentTimeString();
