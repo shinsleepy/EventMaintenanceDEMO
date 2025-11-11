@@ -117,6 +117,14 @@ void EventServer::ShowType(eEventType Type)
 	}
 }
 
+EventUnit* EventServer::GetEvent(int EventID)
+{
+	auto Iter_ = _EventMap.find(EventID);
+	if (Iter_ == _EventMap.end())
+		return nullptr;
+	return &Iter_->second;
+}
+
 void EventServer::Update(time_t CurrentTime)
 {
 	auto Iter_ = _EventMap.begin();
@@ -131,4 +139,17 @@ void EventServer::Update(time_t CurrentTime)
 		else
 			++Iter_;
 	}
+}
+
+void EventServer::Delete(int EventID)
+{
+	auto pEvent_ = GetEvent(EventID);
+	if (!pEvent_)
+	{
+		LogManager::Instance().Log(E_LOG_TYPE_WARNING, "Event not exist to delete. EventID:%d", EventID);
+		return;
+	}
+
+	pEvent_->State = eEventState::EES_FINISH;
+	LogManager::Instance().Log(E_LOG_TYPE_WARNING, "Delete event manually. EventID:%d", EventID);
 }

@@ -45,6 +45,21 @@ int InitCommand()
 		},
 		"Reload CSV");
 
+	CommandManager_.RegisterCommand("delete", [](const std::vector<std::string>& args)
+		{
+			std::cout << "Delete event...\n";
+			if (args.empty())
+			{
+				std::cout << "Require EventID to delete event\n";
+			}
+			else
+			{
+				EventServer::Instance().Delete(std::stoi(args[0]));
+			}
+
+		},
+		"Delete event by EventID(editing CSV and reload is more recommended)");
+
 #ifdef ADJUST_TIME_TEST
 	CommandManager_.RegisterCommand("set_server_time", [](const std::vector<std::string>& args)
 		{
