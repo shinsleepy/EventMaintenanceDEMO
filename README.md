@@ -86,9 +86,6 @@ int Init()
 
 ## TODO
 
-### Functions related to time
-Time functions(time(), localtime()...etc) in this demo should change to a thread save version. And try to keep it still cross-platform.
-
 ### Record event
 Record current events before server closed. And recovery recorded events after server reboot.
 
