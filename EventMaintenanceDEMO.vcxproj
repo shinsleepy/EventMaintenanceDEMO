@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EventServer.cpp" />
+    <ClCompile Include="src\Global\GlobalFunc.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Tools\Command\CommandManager.cpp" />
     <ClCompile Include="src\Tools\Log\LogManager.cpp" />

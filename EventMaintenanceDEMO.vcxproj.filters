@@ -71,6 +71,9 @@
     <ClCompile Include="src\Tools\Log\LogManager.cpp">
       <Filter>src\Tools\Log</Filter>
     </ClCompile>
+    <ClCompile Include="src\Global\GlobalFunc.cpp">
+      <Filter>src\Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="table\EventTable.csv">

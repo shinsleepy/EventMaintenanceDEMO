@@ -6,6 +6,7 @@
 #include <thread>
 #include <atomic>
 #include "EventServer.h"
+#include "Global/GlobalFunc.h"
 
 using namespace std;
 
@@ -44,6 +45,32 @@ int InitCommand()
 		},
 		"Reload CSV");
 
+#ifdef ADJUST_TIME_TEST
+	CommandManager_.RegisterCommand("set_server_time", [](const std::vector<std::string>& args)
+		{
+			std::cout << "Set Server Time...\n";
+			if (args.empty()) 
+			{
+				DebugDeltaTime = 0;
+			}
+			else
+			{
+				SetCurrentTime(StringToTime(args[0]+ " " + args[1]));
+			}
+
+			LogManager::Instance().Log(E_LOG_TYPE_WARNING, "CurrentTime Set To:%s", TimeToString(GetCurrentTime()).c_str());
+			
+		},
+		"Set Server Time (For Test Only). Parameter Should be YY-MM-DD HH:MM");
+
+	CommandManager_.RegisterCommand("get_server_time", [](const std::vector<std::string>& args)
+		{
+			std::cout << "get Server Time...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_INFO, "CurrentTime Is:%s", TimeToString(GetCurrentTime()).c_str());
+		},
+		"Get Server Time (For Test Only)");
+#endif //ADJUST_TIME_TEST
+
 	return E_RETURN_CODE_OK;
 }
 
@@ -76,7 +103,7 @@ void MainProcess()
 	time_t CurrentTime_ = 0;
 	while (g_Running)
 	{	
-		auto temp_ = time(NULL);
+		auto temp_ = GetCurrentTime();
 		if (temp_ != CurrentTime_)// run once per sec
 		{
 			CurrentTime_ = temp_;

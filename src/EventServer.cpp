@@ -38,7 +38,7 @@ void EventServer::RecordCurrentEvent()
 
 void EventServer::ReadCSV()
 {
-	auto CurrentTime_ = time(NULL);
+	auto CurrentTime_ = GetCurrentTime();
 
 	auto EventSettings_ = TableManager::Instance().GetAllEventSetting();
 
