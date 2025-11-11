@@ -18,28 +18,28 @@ int InitCommand()
 
 	CommandManager_.RegisterCommand("exit", [](const std::vector<std::string>&)
 		{
-			std::cout << "Exiting server...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Exiting server...\n");
 			g_Running = false;
 		}, 
 		"Exit the server");
 
 	CommandManager_.RegisterCommand("help", [](const std::vector<std::string>&)
 		{
-			std::cout << "Show commands...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Show commands...\n");
 			CommandManager::Instance().ShowHelp();
 		},
 		"Show all commands and their desc");
 
 	CommandManager_.RegisterCommand("show_event", [](const std::vector<std::string>&)
 		{
-			std::cout << "Show events...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Show events...\n");
 			EventServer::Instance().ShowType();
 		},
 		"Show events");
 
 	CommandManager_.RegisterCommand("reload", [](const std::vector<std::string>&)
 		{
-			std::cout << "Reload CSV...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Reload CSV...\n");
 			TableManager::Instance().Reload();
 			EventServer::Instance().Reload();
 		},
@@ -47,10 +47,10 @@ int InitCommand()
 
 	CommandManager_.RegisterCommand("delete", [](const std::vector<std::string>& args)
 		{
-			std::cout << "Delete event...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Delete event...\n");
 			if (args.empty())
 			{
-				std::cout << "Require EventID to delete event\n";
+				LogManager::Instance().Log(E_LOG_TYPE_COUT, "Require EventID to delete event\n");
 			}
 			else
 			{	
@@ -66,7 +66,7 @@ int InitCommand()
 #ifdef ADJUST_TIME_TEST
 	CommandManager_.RegisterCommand("set_server_time", [](const std::vector<std::string>& args)
 		{
-			std::cout << "Set Server Time...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Set Server Time...\n");
 			if (args.empty()) 
 			{
 				DebugDeltaTime = 0;
@@ -83,7 +83,7 @@ int InitCommand()
 
 	CommandManager_.RegisterCommand("get_server_time", [](const std::vector<std::string>& args)
 		{
-			std::cout << "get Server Time...\n";
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "get Server Time...\n");
 			LogManager::Instance().Log(E_LOG_TYPE_INFO, "CurrentTime Is:%s", TimeToString(GetCurrentTime()).c_str());
 		},
 		"Get server time (for test only)");

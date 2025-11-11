@@ -1,4 +1,5 @@
 #include "CommandManager.h"
+#include "../Log/LogManager.h"
 
 CommandManager& CommandManager::Instance()
 {
@@ -47,19 +48,19 @@ void CommandManager::Execute(const std::string& Input)
         Key_->second(args);
     }
     else {
-        std::cout << "Unknown command: " << Cmd_ << "\n";
+        LogManager::Instance().Log(E_LOG_TYPE_COUT, "Unknown command: %s\n", Cmd_.c_str());
     }
 }
 
 void CommandManager::ShowHelp()
 {
-    std::cout << "Available commands:\n";
+    LogManager::Instance().Log(E_LOG_TYPE_COUT, "Available commands:\n");
     for(auto Iter_ = _Descriptions.begin(); Iter_ != _Descriptions.end(); ++Iter_) 
     {
-        std::cout << " - " << Iter_->first;
         if (!Iter_->second.empty())
-            std::cout << " : " << Iter_->second;
-        std::cout << "\n";
+            LogManager::Instance().Log(E_LOG_TYPE_COUT, " - %s : %s\n", Iter_->first.c_str(), Iter_->second.c_str());
+        else
+            LogManager::Instance().Log(E_LOG_TYPE_COUT, " - %s\n", Iter_->first.c_str(), Iter_->second.c_str());
     }
 }
 

@@ -10,6 +10,7 @@
 
 enum eLogType 
 {
+    E_LOG_TYPE_COUT,
     E_LOG_TYPE_INFO,
     E_LOG_TYPE_WARNING,
     E_LOG_TYPE_ERROR,

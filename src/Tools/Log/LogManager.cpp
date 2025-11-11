@@ -88,8 +88,10 @@ void LogManager::WorkerThread()
                 colorCode = "\033[1;31m"; typeStr = "ERROR"; break;
             }
 
-            std::printf("%s[%s] [%s] %s\033[0m\n", colorCode,
-                msg.timestamp.c_str(), typeStr, msg.text.c_str());
+            if(msg.type == E_LOG_TYPE_COUT)
+                std::printf("%s", msg.text.c_str());
+            else
+                std::printf("%s[%s] [%s] %s\033[0m\n", colorCode, msg.timestamp.c_str(), typeStr, msg.text.c_str());
 
             if (m_FileOutputEnabled) {
                 // TODO: append to file
