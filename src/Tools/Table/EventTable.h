@@ -67,7 +67,7 @@ const int CUSTOM_VALUE_NUM = 5;
 struct EventTableEntry
 {
 	int ID; // EventID
-	eEventType EventType;
+	eEventType EventType; // need to combine with CustomValue[] to implement different effect. Currently no effect
 	eEventDurationType DurationType;
 	int DurationValue; // additional value for duration type
 	int RoundTimeMin; // minutes per round

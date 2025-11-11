@@ -53,7 +53,7 @@ void EventServer::ReadCSV()
 		auto EventIter_ = _EventMap.find(Iter_->first);
 		if (EventIter_ == _EventMap.end())
 		{
-			if (CurrentTime_ > Iter_->second.EndTime)
+			if (CurrentTime_ > Iter_->second.EndTime && Iter_->second.DurationType != eEventDurationType::E_DURATION_PERMANENT)
 				continue;
 
 			// Add new event
