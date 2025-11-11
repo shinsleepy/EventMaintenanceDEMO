@@ -76,7 +76,7 @@ int InitCommand()
 			LogManager::Instance().Log(E_LOG_TYPE_WARNING, "CurrentTime Set To:%s", TimeToString(GetCurrentTime()).c_str());
 			
 		},
-		"Set server time (for test only). Parameter should be YY-MM-DD HH:MM");
+		"Set server time (for test only). Parameter should be YYYY-MM-DD HH:MM");
 
 	CommandManager_.RegisterCommand("get_server_time", [](const std::vector<std::string>& args)
 		{
