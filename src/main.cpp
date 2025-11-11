@@ -53,8 +53,11 @@ int InitCommand()
 				std::cout << "Require EventID to delete event\n";
 			}
 			else
-			{
-				EventServer::Instance().Delete(std::stoi(args[0]));
+			{	
+				int Num_ = 0;
+				std::stringstream SS_(args[0]);
+				SS_ >> Num_;
+				EventServer::Instance().Delete(Num_);
 			}
 
 		},
