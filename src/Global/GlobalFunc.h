@@ -34,9 +34,20 @@ struct DocTime
 	}
 };
 
+inline std::tm Localtime(time_t timestamp)
+{
+	std::tm Result{};
+#ifdef _WIN32
+	localtime_s(&Result, &timestamp);
+#else
+	localtime_r(&timestamp, &Result);
+#endif
+	return Result;
+}
+
 inline std::string TimeToString(time_t timestamp)
 {
-	auto TM_ = *localtime(&timestamp);
+	auto TM_ = Localtime(timestamp);
 
 	std::ostringstream oss;
 	oss << std::put_time(&TM_, "%Y-%m-%d %H:%M");

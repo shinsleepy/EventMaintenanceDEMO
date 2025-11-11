@@ -3,6 +3,7 @@
 #include <cstdarg>
 #include <ctime>
 #include <iostream>
+#include "../../Global/GlobalFunc.h"
 
 LogManager& LogManager::Instance() 
 {
@@ -37,9 +38,9 @@ void LogManager::Stop()
 std::string LogManager::GetCurrentTimeString() 
 {
     std::time_t now = std::time(nullptr);
-    std::tm* localTime = std::localtime(&now);
+    std::tm localTime = Localtime(now);
     char buf[32];
-    std::strftime(buf, sizeof(buf), "%H:%M:%S", localTime);
+    std::strftime(buf, sizeof(buf), "%H:%M:%S", &localTime);
     return buf;
 }
 
