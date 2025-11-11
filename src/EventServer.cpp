@@ -71,11 +71,11 @@ void EventServer::ReadCSV()
 
 		if (CurrentTime_ >= EventIter_->second.RoundTime[0])
 		{
-			EventIter_->second.State = EES_ONGOING;
+			EventIter_->second.State = eEventState::EES_ONGOING;
 			LogManager::Instance().Log(E_LOG_TYPE_INFO, "Add New Event Just After ReadCSV. EventID:%d", EventIter_->first);
 		}
 		else
-			EventIter_->second.State = EES_EVE;
+			EventIter_->second.State = eEventState::EES_EVE;
 
 		// TODO: prepare sync flag to notify other servers
 	}
@@ -85,7 +85,7 @@ void EventServer::ReadCSV()
 	for (auto Iter_ = _EventMap.begin(); Iter_ != _EventMap.end(); ++Iter_)
 	{
 		if (Iter_->second.GetSetting() == nullptr)
-			Iter_->second.State = EES_STOP;
+			Iter_->second.State = eEventState::EES_STOP;
 	}
 }
 
@@ -99,7 +99,7 @@ void EventServer::Show(int EventID)
 	if (!pSetting_)
 		return;
 
-	std::cout << "EventID:" << Iter_->first << " EventType:" << EventTypeToString(pSetting_->EventType) <<" State:" << Iter_->second.State << " From:" << TimeToString(Iter_->second.RoundTime[0]) << " To:"<< TimeToString(Iter_->second.RoundTime[1]) << std::endl;
+	std::cout << "EventID:" << Iter_->first << " EventType:" << EventTypeToString(pSetting_->EventType) <<" State:" << EventStateToString(Iter_->second.State) << " From:" << TimeToString(Iter_->second.RoundTime[0]) << " To:"<< TimeToString(Iter_->second.RoundTime[1]) << std::endl;
 }
 
 void EventServer::ShowType(eEventType Type)
@@ -123,7 +123,7 @@ void EventServer::Update(time_t CurrentTime)
 
 	while(Iter_ != _EventMap.end())	
 	{
-		if (Iter_->second.CheckState(CurrentTime) == EES_FINISH)
+		if (Iter_->second.CheckState(CurrentTime) == eEventState::EES_FINISH)
 		{
 			LogManager::Instance().Log(E_LOG_TYPE_INFO, "Remove finished event. EventID:%d", Iter_->first);
 			Iter_ = _EventMap.erase(Iter_);

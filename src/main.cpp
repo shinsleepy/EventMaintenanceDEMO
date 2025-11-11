@@ -61,14 +61,14 @@ int InitCommand()
 			LogManager::Instance().Log(E_LOG_TYPE_WARNING, "CurrentTime Set To:%s", TimeToString(GetCurrentTime()).c_str());
 			
 		},
-		"Set Server Time (For Test Only). Parameter Should be YY-MM-DD HH:MM");
+		"Set server time (for test only). Parameter should be YY-MM-DD HH:MM");
 
 	CommandManager_.RegisterCommand("get_server_time", [](const std::vector<std::string>& args)
 		{
 			std::cout << "get Server Time...\n";
 			LogManager::Instance().Log(E_LOG_TYPE_INFO, "CurrentTime Is:%s", TimeToString(GetCurrentTime()).c_str());
 		},
-		"Get Server Time (For Test Only)");
+		"Get server time (for test only)");
 #endif //ADJUST_TIME_TEST
 
 	return E_RETURN_CODE_OK;

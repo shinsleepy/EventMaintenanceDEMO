@@ -6,15 +6,45 @@
 #include "Tools/Log/LogManager.h"
 #include <set>
 
-enum eEventState
+//enum eEventState
+//{
+//	EES_NONE,
+//	EES_EVE,
+//	//EES_SHOW,
+//	EES_ONGOING,
+//	EES_STOP,
+//	EES_FINISH,
+//};
+
+#define EVENT_STATE_LIST \
+X(EES_NONE) /* */\
+X(EES_EVE) /*  */\
+X(EES_ONGOING) /*  */\
+X(EES_STOP) /*  */\
+X(EES_FINISH) /*  */\
+
+enum class eEventState
 {
-	EES_NONE,
-	EES_EVE,
-	//EES_SHOW,
-	EES_ONGOING,
-	EES_STOP,
-	EES_FINISH,
+#define X(name) name,
+	EVENT_STATE_LIST
+#undef X
 };
+
+inline const char* EventStateToString(eEventState type) {
+	switch (type) {
+#define X(name) case eEventState::name: return #name;
+		EVENT_STATE_LIST
+#undef X
+	default: return "UNKNOWN";
+	}
+}
+
+//inline eEventState EventStateFromString(const std::string& str) {
+//#define X(name) if (str == #name) return eEventState::name;
+//	EVENT_STATE_LIST
+//#undef X
+//		return eEventState::EES_NONE; // default
+//}
 
 struct EventUnit
 {	
@@ -31,7 +61,7 @@ struct EventUnit
 
 	void Init()
 	{
-		State = EES_NONE;
+		State = eEventState::EES_NONE;
 	}
 
 	const EventTableEntry* GetSetting()
@@ -45,22 +75,22 @@ struct EventUnit
 		if (!pSetting_)
 		{
 			LogManager::Instance().Log(E_LOG_TYPE_ERROR, "Event Lost Setting When CheckState. EventID:%d", EventID);
-			return EES_FINISH;
+			return eEventState::EES_FINISH;
 		}
 			 
 
 		switch (State)
 		{
-		case EES_EVE:
+		case eEventState::EES_EVE:
 			{
 				if (CurrentTime < RoundTime[0])
 					break;
 
-				StateChange(EES_ONGOING);
+				StateChange(eEventState::EES_ONGOING);
 				LogManager::Instance().Log(E_LOG_TYPE_INFO, "Event Started. EventID:%d", EventID);
 			}
 			break;
-		case EES_ONGOING:
+		case eEventState::EES_ONGOING:
 			{
 				HandleSyncState();
 
@@ -70,11 +100,11 @@ struct EventUnit
 				if (pSetting_->DurationType == eEventDurationType::E_DURATION_PERMANENT)
 					break;
 
-				StateChange(EES_STOP);
+				StateChange(eEventState::EES_STOP);
 				LogManager::Instance().Log(E_LOG_TYPE_INFO, "Event Stopped. EventID:%d", EventID);
 			}
 			break;
-		case EES_STOP:
+		case eEventState::EES_STOP:
 		{
 			HandleSyncState();
 
@@ -83,16 +113,16 @@ struct EventUnit
 			ComputeNextRoundTime(CurrentTime);
 			if (RoundTime[0] == 0) // no next round
 			{
-				StateChange(EES_FINISH);
+				StateChange(eEventState::EES_FINISH);
 			}
 			else
 			{
-				StateChange(EES_EVE);
+				StateChange(eEventState::EES_EVE);
 			}
 
 		}
 			break;
-		case EES_FINISH: //will be destroyed in Update()
+		case eEventState::EES_FINISH: //will be destroyed in Update()
 			break;
 		default:
 			break;
@@ -192,7 +222,7 @@ struct EventUnit
 
 	void StateChange(eEventState NewState)
 	{
-		LogManager::Instance().Log(E_LOG_TYPE_INFO, "Event State Change. EventID:%d From %d To %d", EventID, State, NewState);
+		LogManager::Instance().Log(E_LOG_TYPE_INFO, "Event State Change. EventID:%d From %s To %s", EventID, EventStateToString(State), EventStateToString(NewState));
 
 		State = NewState;
 
