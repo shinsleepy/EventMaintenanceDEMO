@@ -64,6 +64,7 @@ void LogManager::Log(eLogType type, const char* format, ...)
     m_CondVar.notify_one();
 }
 
+// Main loop run by a new thread
 void LogManager::WorkerThread() 
 {
     while (m_Running || !m_Queue.empty()) {
@@ -93,24 +94,11 @@ void LogManager::WorkerThread()
             else
                 std::printf("%s[%s] [%s] %s\033[0m\n", colorCode, msg.timestamp.c_str(), typeStr, msg.text.c_str());
 
-            if (m_FileOutputEnabled) {
-                // TODO: append to file
-            }
-
+            // TODO: append to file
+            
             lock.lock();
         }
     }
 }
 
-void LogManager::EnableFileOutput(const std::string& path) 
-{
-    std::lock_guard<std::mutex> lock(m_Mutex);
-    m_FileOutputEnabled = true;
-    m_FilePath = path;
-}
 
-void LogManager::DisableFileOutput() 
-{
-    std::lock_guard<std::mutex> lock(m_Mutex);
-    m_FileOutputEnabled = false;
-}

@@ -4,6 +4,10 @@
 #include <ctime>
 #include <string>
 
+/*
+This file describe the form of EventTable.csv
+*/
+
 // Event Type
 #define EVENT_TYPE_LIST \
 X(E_EVENT_TYPE_NONE) /* */\

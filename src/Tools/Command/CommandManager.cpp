@@ -7,12 +7,14 @@ CommandManager& CommandManager::Instance()
     return s_Instance;
 }
 
+// Register the command name, func, and desc
 void CommandManager::RegisterCommand(const std::string& Name, const std::function<void(const std::vector<std::string>&)>& Func, const std::string& Desc)
 {
     _Commands[Name] = Func;
     _Descriptions[Name] = Desc;
 }
 
+// Fetch the input string from user, execute if it's a registered command
 void CommandManager::Execute(const std::string& Input)
 {
     auto Tokens_ = Tokenize(Input);
@@ -29,6 +31,7 @@ void CommandManager::Execute(const std::string& Input)
     }
 }
 
+// list all the registered commands
 void CommandManager::ShowHelp()
 {
     LogManager::Instance().Log(E_LOG_TYPE_COUT, "Available commands:\n");
@@ -41,6 +44,7 @@ void CommandManager::ShowHelp()
     }
 }
 
+// Spread a input string into tokens
 std::vector<std::string> CommandManager::Tokenize(const std::string& Input)
 {
     std::istringstream iss(Input);

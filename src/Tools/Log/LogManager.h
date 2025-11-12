@@ -8,9 +8,14 @@
 #include <condition_variable>
 #include <atomic>
 
+/*
+This file determine the behaviors of a LogManager
+LogManager is responsible for showing(or writing to file if needed) logs
+*/
+
 enum eLogType 
 {
-    E_LOG_TYPE_COUT,
+    E_LOG_TYPE_COUT, // purely output string, not include other info(time, type...etc)
     E_LOG_TYPE_INFO,
     E_LOG_TYPE_WARNING,
     E_LOG_TYPE_ERROR,
@@ -34,9 +39,6 @@ public:
 
     void Log(eLogType type, const char* format, ...);
 
-    void EnableFileOutput(const std::string& path);
-    void DisableFileOutput();
-
 private:
     LogManager();
 
@@ -49,9 +51,6 @@ private:
     std::mutex m_Mutex;
     std::condition_variable m_CondVar;
     std::atomic<bool> m_Running;
-
-    bool m_FileOutputEnabled = false;
-    std::string m_FilePath;
 };
 
 #endif //_LOG_MANAGER_H_

@@ -24,6 +24,7 @@ void TableManager::Clear()
     _EventTableSetting.clear();
 }
 
+// Assign the path of CSV folder
 void TableManager::SetPath(std::string Path)
 {
 	_TablePath = Path;
@@ -48,6 +49,7 @@ TableManager::~TableManager()
     Clear();
 }
 
+// Arrange data from EventTable.csv to a suitable form
 int TableManager::ReadEventTable()
 {
 	EventTableEntry TempEntry_;
@@ -135,11 +137,13 @@ int TableManager::ReadEventTable()
 	return 0;
 }
 
+// Request the whole EventTable settings
 const std::map<int, EventTableEntry>& TableManager::GetAllEventSetting() const
 {
     return _EventTableSetting;
 }
 
+// Request a single  EventTable setting
 const EventTableEntry* TableManager::GetEventEntry(int EventID)
 {
     auto Iter_ = _EventTableSetting.find(EventID);

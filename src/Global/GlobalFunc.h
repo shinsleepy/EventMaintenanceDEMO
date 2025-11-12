@@ -8,6 +8,7 @@
 
 #define ADJUST_TIME_TEST // only use to test
 
+//DocTime is similar to tm. It's the early time form which planners assign in CSV
 struct DocTime
 {
 	int Year;

@@ -10,6 +10,11 @@
 #include <queue>
 #include <mutex>
 
+/*
+This file determine the behaviors of an CommandManager
+CommandManager wounld listen input from user, and fetch it
+If it is a registered command, then execute it
+*/
 class CommandManager
 {
 private:
