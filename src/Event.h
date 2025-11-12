@@ -6,12 +6,20 @@
 #include "Tools/Log/LogManager.h"
 #include <set>
 
+/*
+This file implement the behaviors of EventUnit
+EventUnit is an event maintained by EventServer in runtime
+EventTime[] is read from CSV, stand for the whole event period.
+RoundTime[] is computed from EventTime and other duration setting
+EventState change depend on RoundTime
+*/
+
 #define EVENT_STATE_LIST \
 X(EES_NONE) /* */\
-X(EES_EVE) /*  */\
-X(EES_ONGOING) /*  */\
-X(EES_STOP) /*  */\
-X(EES_FINISH) /*  */\
+X(EES_EVE) /* Event has not started yet, will start in the future */\
+X(EES_ONGOING) /* Event is running */\
+X(EES_STOP) /* Event stop, may open next round or finish depend on EventTime */\
+X(EES_FINISH) /* Event finish and will be deleted */\
 
 enum class eEventState
 {
@@ -52,6 +60,7 @@ struct EventUnit
 		return TableManager::Instance().GetEventEntry(EventID);
 	}
 
+	// Run each second to check if EventState need changed
 	eEventState CheckState(time_t CurrentTime)
 	{
 		auto pSetting_ = GetSetting();
@@ -114,6 +123,7 @@ struct EventUnit
 		return State;
 	}
 
+	// According EventTime and other duration settings in CSV, compute the next round (start and end) time
 	void ComputeNextRoundTime(time_t CurrentTime)
 	{
 		RoundTime[0] = 0;

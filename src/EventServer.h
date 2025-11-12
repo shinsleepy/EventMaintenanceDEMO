@@ -5,6 +5,12 @@
 #include <map>
 #include "Event.h"
 
+/*
+This file determine the behaviors of an EventServer
+EventServer maintain runtime events, called EventUnit
+And handle kinds of request from outside. For example, reload command, get running event data...etc
+*/
+
 class EventServer
 {
 private:

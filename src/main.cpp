@@ -12,6 +12,7 @@ using namespace std;
 
 std::atomic<bool> g_Running = true;
 
+// Register commands to this server
 int InitCommand()
 {
 	auto& CommandManager_ = CommandManager::Instance();
@@ -138,6 +139,7 @@ int Close()
 	return E_RETURN_CODE_OK;
 }
 
+// Run by a new thread to handle commands
 void CommandListener()
 {
 	std::string Input_;

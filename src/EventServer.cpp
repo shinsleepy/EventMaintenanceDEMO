@@ -36,6 +36,7 @@ void EventServer::RecordCurrentEvent()
 	// TODO: record current events to DB or ini
 }
 
+// Refresh the runtime events by read the CSV
 void EventServer::ReadCSV()
 {
 	auto CurrentTime_ = GetCurrentTime();
@@ -124,6 +125,7 @@ EventUnit* EventServer::GetEvent(int EventID)
 	return &Iter_->second;
 }
 
+// Run each second, make EventUnits check their state
 void EventServer::Update(time_t CurrentTime)
 {
 	auto Iter_ = _EventMap.begin();
