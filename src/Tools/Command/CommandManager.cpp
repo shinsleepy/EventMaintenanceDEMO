@@ -13,29 +13,6 @@ void CommandManager::RegisterCommand(const std::string& Name, const std::functio
     _Descriptions[Name] = Desc;
 }
 
-//void CommandManager::EnqueueCommand(const std::string& Cmd)
-//{
-//    std::lock_guard<std::mutex> lock(_Mutex);
-//    _Queue.push(Cmd);
-//}
-//
-//bool CommandManager::TryDequeueCommand(std::string& OutCmd)
-//{
-//    std::lock_guard<std::mutex> lock(_Mutex);
-//    if (_Queue.empty()) return false;
-//    OutCmd = std::move(_Queue.front());
-//    _Queue.pop();
-//    return true;
-//}
-//
-//void CommandManager::ExecutePending()
-//{
-//    std::string Cmd_;
-//    while (TryDequeueCommand(Cmd_)) {
-//        Execute(Cmd_);
-//    }
-//}
-
 void CommandManager::Execute(const std::string& Input)
 {
     auto Tokens_ = Tokenize(Input);

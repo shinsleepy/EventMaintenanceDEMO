@@ -59,7 +59,6 @@ void EventServer::ReadCSV()
 			// Add new event
 			EventUnit NewEvent_;
 			EventIter_ = _EventMap.insert_or_assign(Iter_->first, NewEvent_).first; 
-			//EventIter_ = _EventMap.emplace(Iter_->first, NewEvent_).first;
 			NewEvent_.Init();
 		}
 
@@ -100,7 +99,6 @@ void EventServer::Show(int EventID)
 		return;
 
 	LogManager::Instance().Log(E_LOG_TYPE_COUT, "EventID:%d EventType:%s State:%s From:%s To:%s\n", Iter_->first, EventTypeToString(pSetting_->EventType), EventStateToString(Iter_->second.State), TimeToString(Iter_->second.RoundTime[0]).c_str(), TimeToString(Iter_->second.RoundTime[1]).c_str());
-	/*std::cout << "EventID:" << Iter_->first << " EventType:" << EventTypeToString(pSetting_->EventType) <<" State:" << EventStateToString(Iter_->second.State) << " From:" << TimeToString(Iter_->second.RoundTime[0]) << " To:"<< TimeToString(Iter_->second.RoundTime[1]) << std::endl;*/
 }
 
 void EventServer::ShowType(eEventType Type)

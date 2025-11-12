@@ -6,16 +6,6 @@
 #include "Tools/Log/LogManager.h"
 #include <set>
 
-//enum eEventState
-//{
-//	EES_NONE,
-//	EES_EVE,
-//	//EES_SHOW,
-//	EES_ONGOING,
-//	EES_STOP,
-//	EES_FINISH,
-//};
-
 #define EVENT_STATE_LIST \
 X(EES_NONE) /* */\
 X(EES_EVE) /*  */\
@@ -38,13 +28,6 @@ inline const char* EventStateToString(eEventState type) {
 	default: return "UNKNOWN";
 	}
 }
-
-//inline eEventState EventStateFromString(const std::string& str) {
-//#define X(name) if (str == #name) return eEventState::name;
-//	EVENT_STATE_LIST
-//#undef X
-//		return eEventState::EES_NONE; // default
-//}
 
 struct EventUnit
 {	
@@ -177,42 +160,6 @@ struct EventUnit
 			}
 		}
 			break;
-		//case eEventDurationType::E_DURATION_WEEK_DAYS:
-		//{
-		//	std::set<int> WeekDaySet_;
-		//	auto WeekDayNum_ = pSetting_->DurationValue;
-		//	auto TempWeekDay_ = 0;
-
-		//	while (WeekDayNum_ > 0)
-		//	{
-		//		TempWeekDay_ = int(WeekDayNum_ % 10);
-		//		WeekDayNum_ /= 10;
-
-		//		if (TempWeekDay_ <= 7)
-		//		{
-		//			WeekDaySet_.insert(TempWeekDay_);
-		//		}
-		//	}
-
-		//	// should fix to thread safe version
-		//	auto CurrentTM_ = *localtime(&CurrentTime);
-		//	tm NextTM_ = {};
-
-		//	if (CurrentTime < EventTime[0])
-		//	{ 
-		//		NextTM_ = *localtime(&EventTime[0]); 
-		//	}
-		//	else
-		//	{
-		//		NextTM_ = CurrentTM_;
-		//		NextTM_.tm_hour = localtime(&pSetting_->StartTime)->tm_hour;
-		//	}
-
-		//	auto StartWeekDay_ = NextTM_.tm_wday;
-		//}
-		//	break;
-		//case eEventDurationType::E_DURATION_REPEAT:
-		//	break;
 		default:
 			break;
 		}

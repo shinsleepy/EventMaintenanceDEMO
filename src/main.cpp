@@ -125,7 +125,6 @@ void MainProcess()
 		if (temp_ != CurrentTime_)// run once per sec
 		{
 			CurrentTime_ = temp_;
-			//LogManager::Instance().Log(E_LOG_TYPE_INFO, "Heartbeat %d", CurrentTime_);
 
 			EventServer::Instance().Update(CurrentTime_);
 		}
