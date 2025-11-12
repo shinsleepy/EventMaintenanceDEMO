@@ -67,7 +67,7 @@ int InitCommand()
 #ifdef ADJUST_TIME_TEST
 	CommandManager_.RegisterCommand("set_server_time", [](const std::vector<std::string>& args)
 		{
-			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Set Server Time...\n");
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Set server time...\n");
 			if (args.empty()) 
 			{
 				DebugDeltaTime = 0;
@@ -80,11 +80,11 @@ int InitCommand()
 			LogManager::Instance().Log(E_LOG_TYPE_WARNING, "CurrentTime Set To:%s", TimeToString(GetCurrentTime()).c_str());
 			
 		},
-		"Set server time (for test only). Parameter should be YYYY-MM-DD HH:MM");
+		"Set server time (for test only). Parameters should be YYYY-MM-DD HH:MM");
 
 	CommandManager_.RegisterCommand("get_server_time", [](const std::vector<std::string>& args)
 		{
-			LogManager::Instance().Log(E_LOG_TYPE_COUT, "get Server Time...\n");
+			LogManager::Instance().Log(E_LOG_TYPE_COUT, "Get server time...\n");
 			LogManager::Instance().Log(E_LOG_TYPE_INFO, "CurrentTime Is:%s", TimeToString(GetCurrentTime()).c_str());
 		},
 		"Get server time (for test only)");
@@ -113,6 +113,7 @@ int Init()
 	// Init Command
 	if (InitCommand())
 		return E_RETURN_CODE_FAILED;
+	LogManager::Instance().Log(E_LOG_TYPE_INFO, "CommandManager Init Complete");
 
 	return E_RETURN_CODE_OK;
 }

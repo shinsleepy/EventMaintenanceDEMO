@@ -64,7 +64,7 @@ void LogManager::Log(eLogType type, const char* format, ...)
     m_CondVar.notify_one();
 }
 
-// Main loop run by a new thread
+// Main loop, run by a new thread
 void LogManager::WorkerThread() 
 {
     while (m_Running || !m_Queue.empty()) {
